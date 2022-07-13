@@ -3,6 +3,8 @@ class Card {
         this.value = value;
         this.suit = suit;
     }
+
 }
 
-module.exports = Card;
+
+export default Card;
