@@ -8,7 +8,12 @@ let cardDisplay = document.getElementById("cardDisplay");
 let message = document.getElementById("message");
 let drawCardButton = document.getElementById("btnDraw");
 
+
+//OJO TESTEAR PORQUE LA CREACIÓN DE OBJETOS DEBE SER POR FUERA.. PARA PODER HACER PERSISTENCIA DE DATOS
+//Y YA DENTRO DE LOS EVENTOS MODIFICO LOS ATRIBUTOS CON LOS SETTERS
+
 NewGameButton.addEventListener("click", function(){
+    drawCardButton.disabled = false;
     message.innerHTML = "Good Luck!";
     cardDisplay.innerHTML = " ";
     const game = new Game();
@@ -20,6 +25,7 @@ NewGameButton.addEventListener("click", function(){
     drawCardButton.addEventListener("click", function(){
         gambler.drawCard(deck.getCards(), cardDisplay);
     },false);
+
 }, false );
 
 
