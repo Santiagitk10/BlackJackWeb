@@ -4,6 +4,14 @@ class Card {
         this.suit = suit;
     }
 
+    getValue(){
+        return this.value;
+    }
+
+    getSuit(){
+        return this.suit;
+    }
+
 }
 
 

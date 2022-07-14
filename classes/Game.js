@@ -12,12 +12,19 @@ class Game {
 
     advanceRound(gambler){
         this.round++;
-        gambler.increasePrice(this.roundPrice);
+        gambler.increasePrize(this.roundPrice);
     }
 
     resetGame(gambler){
         this.round = 1;
-        gambler.decreasePrice();
+        gambler.decreasePrize();
+    }
+
+    startGame(gambler, cardsDeck, cardDisplayDiv){
+        for(let i = 0; i < 2; i++){
+            gambler.drawCard(cardsDeck, cardDisplayDiv);
+        }
+        
     }
 
 }

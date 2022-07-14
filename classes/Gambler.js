@@ -3,16 +3,11 @@
 
 class Gambler {
     constructor(name, currentGame){
-        this.name = name;
-        this.price = 0;
+        this.prize = 0;
         this.currentHand = [];
         this.currentScore = 0;
         this.currentGame = currentGame;
         this.status = "Active";
-    }
-
-    getName(){
-        return this.name;
     }
 
     getCurrentHand(){
@@ -23,13 +18,14 @@ class Gambler {
         return this.currentScore;
     }
 
-    getPrice(){
-        return this.price;
+    getPrize(){
+        return this.prize;
     }
 
-    drawCard(cardsDeck){
+    drawCard(cardsDeck, cardDisplayDiv){
         this.currentHand.push(cardsDeck.pop());
-        this.setCurrentScore();
+        this.addCardToDisplay(cardDisplayDiv);
+        // this.setCurrentScore();
         console.log("Your current Hand")
         console.log(this.getCurrentHand());
         console.log("Your current Score");
@@ -37,15 +33,23 @@ class Gambler {
 
     }
 
-
-    increasePrice(increase){
-        this.price += increase;
-        console.log(`Your current Price is: $${this.getPrice()}`);
+    addCardToDisplay(cardDisplayDiv){
+        let newImg = document.createElement('img');
+        let card = this.getCurrentHand()[this.getCurrentHand().length-1];
+        newImg.src = "./cards/" + card.getValue() + "-" + card.getSuit() + ".png";
+        console.log("here" ,newImg.src);
+        cardDisplayDiv.append(newImg);
     }
 
-    decreasePrice(){
-        this.price = 0;
-        console.log(`Your current Price is: $${this.getPrice()}`);
+
+    increasePrize(increase){
+        this.prize += increase;
+        console.log(`Your current Price is: $${this.getPrize()}`);
+    }
+
+    decreasePrize(){
+        this.prize = 0;
+        console.log(`Your current Price is: $${this.getPrize()}`);
     }
 
     setCurrentScore(){
@@ -74,7 +78,7 @@ class Gambler {
 
         if(this.getCurrentScore() >= 18 && this.getCurrentScore() <= 21){
             this.currentGame.advanceRound(this);
-            console.log(`That´s Because You Rule ${this.getName()}!  Your current round is: ${this.currentGame.getRound()}`);
+            console.log(`That´s Because You Rule!   Your current round is: ${this.currentGame.getRound()}`);
             this.status = "Won";
             // this.currentScore = 0;
         } else if(this.getCurrentScore() > 21){
