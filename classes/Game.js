@@ -1,26 +1,26 @@
 
-// class Game {
+class Game {
 
-//     constructor(){
-//         this.roundPrice = 1000;
-//         this.round = 1;
-//     }
+    constructor(){
+        this.roundPrice = 1000;
+        this.round = 1;
+    }
 
-//     getRound(){
-//         return this.round;
-//     }
+    getRound(){
+        return this.round;
+    }
 
-//     advanceRound(gambler){
-//         this.round++;
-//         gambler.increasePrice(this.roundPrice);
-//     }
+    advanceRound(gambler){
+        this.round++;
+        gambler.increasePrice(this.roundPrice);
+    }
 
-//     resetGame(gambler){
-//         this.round = 1;
-//         gambler.decreasePrice();
-//     }
+    resetGame(gambler){
+        this.round = 1;
+        gambler.decreasePrice();
+    }
 
-// }
+}
 
 
 export default Game;
