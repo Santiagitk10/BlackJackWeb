@@ -3,6 +3,7 @@
 class Gambler {
     constructor(currentGame){
         this.prize = 0;
+        this.temporalPrize = 0;
         this.currentHand = [];
         this.currentScore = 0;
         this.currentGame = currentGame;
@@ -22,6 +23,7 @@ class Gambler {
 
     drawCard(cardsDeck, cardDisplayDiv){
         console.log("Draw Card Call") //TO BE DELETED
+        console.log(this.getCurrentHand()); //TO BE DELETED
         this.currentHand.push(cardsDeck.pop());
         console.log(this.getCurrentHand()); //TO BE DELETED
         this.setCurrentScore();
@@ -37,71 +39,33 @@ class Gambler {
     }
 
 
-    increasePrize(increase){
-        this.prize += increase;
-        // console.log(`Your current Price is: $${this.getPrize()}`);
-    }
-
-    decreasePrize(){
-        this.prize = 0;
-        // console.log(`Your current Price is: $${this.getPrize()}`);
-    }
-
     setCurrentScore(){
 
         let message = document.getElementById("message");
         let drawCardButton = document.getElementById("btnDraw");
         let score = document.getElementById("score");
+        let cardDisplay = document.getElementById("cardDisplay");
+        let NewGameButton = document.getElementById("btnNewGame");
  
 
         if(this.getCurrentHand()[this.getCurrentHand().length-1].value  === "J" ||  
         this.getCurrentHand()[this.getCurrentHand().length-1].value  === "Q" || 
         this.getCurrentHand()[this.getCurrentHand().length-1].value  === "K") {
             this.currentScore += 10;
+            this.temporalPrize += 500;
         } else if (this.getCurrentHand()[this.getCurrentHand().length-1].value  === "A"){
 
-            if(this.getCurrentScore() + 11 <= 18){
-                let valueOfA = document.getElementById("valueOfA");
-                drawCardButton.disabled = true;
-                valueOfA.style.display = "block";
-                let choiceA = document.getElementById("choiceA");
-                choiceA.addEventListener("click", function(e){
-                    e.preventDefault();
-                    let elements = document.getElementsByName("chooseA");
-
-                    let chosenAValue;
-
-                    for(let i = 0; i < elements.length; i++) {
-                        if(elements[i].checked){
-                            chosenAValue = elements[i].value;
-                            break;
-                        }
-                    }
-                        console.log(chosenAValue) //TO DELETE
-
-                        valueOfA.style.display = "none";
-
-                        if(parseInt(chosenAValue) === 1){
-                            console.log(this.parentNode);
-                            this.currentScore += 1;
-                        } else if(parseInt(chosenAValue) === 11){
-                            this.currentScore += 11;
-                        }
-
-                        console.log(this.currentScore);  //TO DELETE
-                    
-
-                    drawCardButton.disabled = false;
-
-                    // score.innerHTML = this.getCurrentScore();
-
-                }, false);        
+            if(this.getCurrentScore() + 11 <= 21){
+                this.currentScore += 11;      
             } else {
                 this.currentScore +=1;
             }
 
+            this.temporalPrize += 500;
+
         } else {
             this.currentScore += parseInt(this.getCurrentHand()[this.getCurrentHand().length-1].value);
+            this.temporalPrize += 100;
         }
 
         score.innerHTML = this.getCurrentScore();
@@ -112,13 +76,31 @@ class Gambler {
             message.innerHTML = "Congratulations you Won!"
             drawCardButton.disabled = true;
             this.currentScore = 0;
-        } else if(this.getCurrentScore() > 21){
+            this.prize += this.temporalPrize;
+            this.temporalPrize = 0;
+            NewGameButton.innerHTML = "Next Round";
+
+
+        } else if(this.getCurrentScore() === 21){
+            this.currentGame.advanceRound(this);
+            message.innerHTML = "BlackJack!!!!"
+            drawCardButton.disabled = true;
+            this.currentScore = 0;
+            this.temporalPrize += 1000;
+            this.prize += this.temporalPrize;
+            this.temporalPrize = 0;
+            NewGameButton.innerHTML = "Next Round";
+        }
+        else if(this.getCurrentScore() > 21){
             this.currentGame.resetGame(this);
-            
             // console.log(`That Because You Lost :( Your current round is: ${this.currentGame.getRound()}`);
             message.innerHTML = "You Lose :("
             drawCardButton.disabled = true;
             this.currentScore = 0;
+            this.temporalPrize = 0;
+            this.prize = 0;
+            NewGameButton.innerHTML = "New Game";
+
         }
 
     }

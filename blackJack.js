@@ -7,113 +7,57 @@ let NewGameButton = document.getElementById("btnNewGame");
 let cardDisplay = document.getElementById("cardDisplay");
 let message = document.getElementById("message");
 let drawCardButton = document.getElementById("btnDraw");
+let round = document.getElementById("round");
+let prize = document.getElementById("prize");
+let leaveTableButton = document.getElementById("leaveTable");
+
+const game = new Game();
+const gambler = new Gambler(game);
+const deck = new CardsDeck();
+
+leaveTableButton.disabled = true;
+drawCardButton.disabled = true;
 
 
-//OJO TESTEAR PORQUE LA CREACIÓN DE OBJETOS DEBE SER POR FUERA.. PARA PODER HACER PERSISTENCIA DE DATOS
-//Y YA DENTRO DE LOS EVENTOS MODIFICO LOS ATRIBUTOS CON LOS SETTERS
+NewGameButton.addEventListener("click", function(e){
 
-NewGameButton.addEventListener("click", function(){
-    drawCardButton.disabled = false;
-    message.innerHTML = "Good Luck!";
-    cardDisplay.innerHTML = " ";
-    const game = new Game();
-    const gambler = new Gambler(game);
-    const deck = new CardsDeck();
-    deck.createNewDeck();
-    game.startGame(gambler,deck.getCards(), cardDisplay);
+    console.log(e.target.innerHTML);
 
-    drawCardButton.addEventListener("click", function(){
-        gambler.drawCard(deck.getCards(), cardDisplay);
-    },false);
+    if(e.target.innerHTML === "New Game"){
+        message.innerHTML = "Good Luck!";
+        game.resetGame(gambler);
+    } else if(e.target.innerHTML === "Next Round"){
+        message.innerHTML = "Keep Going!";
+        NewGameButton.innerHTML = "New Game";
+    }
+
+        drawCardButton.disabled = false;
+        drawCardButton.disabled = false;
+        leaveTableButton.disabled = false;
+        cardDisplay.innerHTML = " ";
+        gambler.currentHand = [];
+        deck.cards = [];
+        deck.createNewDeck();
+        gambler.currentScore = 0;
+        
+        round.innerHTML = game.getRound();
+        prize.innerHTML = gambler.getPrize();
+
+        gambler.drawCard(deck.getCards(),cardDisplay);
+        gambler.drawCard(deck.getCards(),cardDisplay);
+    
 
 }, false );
 
 
+drawCardButton.addEventListener("click", function(){
+    gambler.drawCard(deck.getCards(), cardDisplay);
+},false);
 
 
+leaveTableButton.addEventListener("click", function(){
+    message.innerHTML = "You leave with: $" + gambler.getPrize() + " !!!";
+    NewGameButton.innerHTML = "New Game";
+    this.disabled = true;
+});
 
-
-// let isGameOn = true;
-
-// do {
-    // gambler.currentScore = 0;
-    // do {
-        // if(game.getRound() > 1){
-        //     deck.createNewDeck();
-        // }
-        // gambler.drawCard(deck.getCards());
-
-        // if(gambler.getCurrentScore() >= 18){
-        //     isGameOn = false;
-        // }
-    // } while (isGameOn);
-    
-
-    // STATUS CHANGER IS NOT DEFINED BECAUSE OF PROMPT
-    // let statusChanger = prompt("Enter 1 to advance round if you Won or to close if you Lost. Enter 2 to retire: "); 
-    // if(parseInt(statusChanger) === 2){
-    //     gambler.status = "Retired";
-    //     gambler.currentHand = [];
-    // } else if(parseInt(statusChanger) === 1 && gambler.status != "Lost"){
-    //     gambler.status = "Active";
-    //     gambler.currentHand = [];
-    //     isGameOn = true;
-    // }
-
-    
-
-    // if(game.getRound() > 3){
-    //     gambler.status = "Retired";
-    // }
-
-    // console.log(`Gambler Status: ${gambler.status}`);
-
-// } while (gambler.status === "Active" || gambler.status === "Won");
-
-
-
-
-
-
-
-
-
-
-
-
-
-//ORIGINAL DO WHILE FUNCTIONALITY
-// do {
-//     gambler.currentScore = 0;
-//     // do {
-//         if(game.getRound() > 1){
-//             deck.createNewDeck();
-//         }
-//         gambler.drawCard(deck.getCards());
-
-//         if(gambler.getCurrentScore() >= 18){
-//             isGameOn = false;
-//         }
-//     } while (isGameOn);
-    
-
-//     STATUS CHANGER IS NOT DEFINED BECAUSE OF PROMPT
-//     let statusChanger = prompt("Enter 1 to advance round if you Won or to close if you Lost. Enter 2 to retire: "); 
-//     if(parseInt(statusChanger) === 2){
-//         gambler.status = "Retired";
-//         gambler.currentHand = [];
-//     } else if(parseInt(statusChanger) === 1 && gambler.status != "Lost"){
-//         gambler.status = "Active";
-//         gambler.currentHand = [];
-//         isGameOn = true;
-//     }
-
-    
-
-//     if(game.getRound() > 3){
-//         gambler.status = "Retired";
-//     }
-
-//     console.log(`Gambler Status: ${gambler.status}`);
-
-// } while (gambler.status === "Active" || gambler.status === "Won");
