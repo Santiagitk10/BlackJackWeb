@@ -106,3 +106,18 @@ button {
     margin-top: 10px;
 }
 
+#valueOfA {
+    display: none;
+}
+
+form {
+    font-size: 0.7em;
+}
+
+form button {
+    width: 140px;
+    height: 30px;
+    font-size: 0.5em;
+    margin-top: 10px;
+}
+

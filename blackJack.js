@@ -6,6 +6,7 @@ import CardsDeck from "./classes/CardsDeck.js";
 let NewGameButton = document.getElementById("btnNewGame");
 let cardDisplay = document.getElementById("cardDisplay");
 let message = document.getElementById("message");
+let drawCardButton = document.getElementById("btnDraw");
 
 NewGameButton.addEventListener("click", function(){
     message.innerHTML = "Good Luck!";
@@ -15,6 +16,10 @@ NewGameButton.addEventListener("click", function(){
     const deck = new CardsDeck();
     deck.createNewDeck();
     game.startGame(gambler,deck.getCards(), cardDisplay);
+
+    drawCardButton.addEventListener("click", function(){
+        gambler.drawCard(deck.getCards(), cardDisplay);
+    },false);
 }, false );
 
 
@@ -22,7 +27,7 @@ NewGameButton.addEventListener("click", function(){
 
 
 
-let isGameOn = true;
+// let isGameOn = true;
 
 // do {
     // gambler.currentScore = 0;
