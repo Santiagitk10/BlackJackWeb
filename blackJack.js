@@ -30,7 +30,6 @@ NewGameButton.addEventListener("click", function(e){
         message.innerHTML = "Keep Going!";
         NewGameButton.innerHTML = "New Game";
     }
-
         drawCardButton.disabled = false;
         drawCardButton.disabled = false;
         leaveTableButton.disabled = false;
@@ -45,7 +44,6 @@ NewGameButton.addEventListener("click", function(e){
 
         gambler.drawCard(deck.getCards(),cardDisplay);
         gambler.drawCard(deck.getCards(),cardDisplay);
-    
 
 }, false );
 
@@ -59,5 +57,6 @@ leaveTableButton.addEventListener("click", function(){
     message.innerHTML = "You leave with: $" + gambler.getPrize() + " !!!";
     NewGameButton.innerHTML = "New Game";
     this.disabled = true;
+    drawCardButton.disabled = true;
 });
 
